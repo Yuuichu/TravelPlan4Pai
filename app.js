@@ -91,7 +91,7 @@ function buildPrompt() {
 个人人设：${elements.persona.value.trim() || "未填写，请只根据本次偏好推断。"}
 必去地点或避雷点：${elements.constraints.value.trim() || "无"}
 
-请直接输出可以粘贴到圆周旅记的纯文本攻略。`;
+请直接输出可以粘贴到圆周旅记的纯文本地点规划，最多 3000 字，不要写很详细的攻略。`;
 }
 
 async function generatePlan() {
@@ -113,7 +113,7 @@ async function generatePlan() {
         messages: [
           {
             role: "system",
-            content: "你专门把旅行计划改写成圆周旅记容易理解、可执行、无歧义的纯文本攻略。",
+            content: "你专门把旅行计划改写成圆周旅记容易理解、可执行、无歧义的纯文本地点规划，输出最多 3000 字。",
           },
           {
             role: "user",
