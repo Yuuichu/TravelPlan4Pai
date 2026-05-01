@@ -7,8 +7,9 @@
 - 输入精确到年月日的游玩日期范围
 - 输入游玩偏好、同行人数、必去地点和避雷点
 - 在浏览器 localStorage 保存 DeepSeek API Key、模型名和个人人设
-- 调用 DeepSeek Chat Completions API 生成可直接粘贴到圆周旅记的纯文本攻略
-- 按半天 4 小时规划每日行程，并要求输出主方案、备份方案、删减顺序和富余时间方案
+- 调用 DeepSeek Chat Completions API 生成可直接粘贴到圆周旅记的纯文本地点规划
+- 默认使用官方文档推荐的 `deepseek-v4-pro` 模型
+- 按半天 4 小时规划每日地点，并要求输出主地点和备份地点
 
 ## 本地预览
 

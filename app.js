@@ -28,7 +28,7 @@ function loadSettings() {
 
   const settings = JSON.parse(rawSettings);
   elements.apiKey.value = settings.apiKey || "";
-  elements.modelName.value = settings.modelName || "deepseek-chat";
+  elements.modelName.value = settings.modelName || "deepseek-v4-pro";
   elements.persona.value = settings.persona || "";
   elements.saveStatus.textContent = "已从本地读取";
 }
@@ -36,7 +36,7 @@ function loadSettings() {
 function saveSettings() {
   const settings = {
     apiKey: elements.apiKey.value.trim(),
-    modelName: elements.modelName.value.trim() || "deepseek-chat",
+    modelName: elements.modelName.value.trim() || "deepseek-v4-pro",
     persona: elements.persona.value.trim(),
   };
 
@@ -47,7 +47,7 @@ function saveSettings() {
 function clearSettings() {
   localStorage.removeItem(storageKey);
   elements.apiKey.value = "";
-  elements.modelName.value = "deepseek-chat";
+  elements.modelName.value = "deepseek-v4-pro";
   elements.persona.value = "";
   elements.saveStatus.textContent = "已清空";
 }
@@ -109,7 +109,7 @@ async function generatePlan() {
         Authorization: `Bearer ${elements.apiKey.value.trim()}`,
       },
       body: JSON.stringify({
-        model: elements.modelName.value.trim() || "deepseek-chat",
+        model: elements.modelName.value.trim() || "deepseek-v4-pro",
         messages: [
           {
             role: "system",
