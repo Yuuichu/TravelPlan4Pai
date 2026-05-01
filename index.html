@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TravelPlan4Pai｜圆周旅记纯文本攻略生成器</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">TravelPlan4Pai</p>
+      <h1>给圆周旅记用的纯文本攻略生成器</h1>
+      <p class="subtitle">用 DeepSeek API 把日期、偏好、同行人数整理成明确到地点、玩法、时间段和备份方案的文本行程。</p>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel settings-panel" aria-labelledby="settings-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Settings</p>
+          <h2 id="settings-title">API 与个人人设</h2>
+        </div>
+        <span id="save-status" class="status">未保存</span>
+      </div>
+
+      <label>
+        DeepSeek API Key
+        <input id="api-key" type="password" autocomplete="off" placeholder="sk-..." />
+      </label>
+
+      <label>
+        DeepSeek Model
+        <input id="model-name" type="text" value="deepseek-chat" />
+      </label>
+
+      <label>
+        个人人设（会保存到浏览器本地缓存）
+        <textarea id="persona" rows="8" placeholder="例如：喜欢城市漫步、咖啡、夜景；体力中等；不喜欢太赶；预算适中。"></textarea>
+      </label>
+
+      <div class="button-row">
+        <button id="save-settings" type="button">保存设置</button>
+        <button id="clear-settings" type="button" class="secondary">清空本地设置</button>
+      </div>
+      <p class="hint">API Key 仅保存在当前浏览器的 localStorage，不会上传到本项目服务器；GitHub Pages 是纯静态部署。</p>
+    </section>
+
+    <section class="panel form-panel" aria-labelledby="plan-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Planner</p>
+          <h2 id="plan-title">生成给圆周旅记的攻略文本</h2>
+        </div>
+      </div>
+
+      <div class="grid two">
+        <label>
+          目的地城市
+          <input id="destination" type="text" placeholder="例如：杭州" />
+        </label>
+        <label>
+          出行人数
+          <input id="people-count" type="number" min="1" value="2" />
+        </label>
+      </div>
+
+      <div class="grid two">
+        <label>
+          开始日期
+          <input id="start-date" type="date" />
+        </label>
+        <label>
+          结束日期
+          <input id="end-date" type="date" />
+        </label>
+      </div>
+
+      <label>
+        游玩偏好
+        <textarea id="preferences" rows="5" placeholder="例如：想要拍照出片、不要太累、喜欢当地小吃和博物馆。"></textarea>
+      </label>
+
+      <label>
+        必去地点或避雷点（可选）
+        <textarea id="constraints" rows="4" placeholder="例如：必须去西湖；不想去太商业化的街区。"></textarea>
+      </label>
+
+      <div class="button-row">
+        <button id="generate-plan" type="button">生成攻略</button>
+        <button id="copy-output" type="button" class="secondary">复制结果</button>
+      </div>
+    </section>
+
+    <section class="panel output-panel" aria-labelledby="output-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Output</p>
+          <h2 id="output-title">纯文本输出</h2>
+        </div>
+        <span id="generation-status" class="status">待生成</span>
+      </div>
+      <textarea id="output" rows="24" placeholder="生成后的攻略会出现在这里，可直接复制到圆周旅记。"></textarea>
+    </section>
+  </main>
+
+  <template id="fallback-template">
+你是一个严谨的中国境内自由行规划师。请为圆周旅记生成纯文本攻略。
+
+硬性要求：
+1. 写明游玩日期范围，精确到年月日。
+2. 写明游玩偏好、同行人数，并结合个人人设。
+3. 给出明确地点推荐、玩法和时间，让圆周旅记不要迷惑。
+4. 每天按半天 4 小时为单位规划：上午、下午、晚上可按实际日期拆分。
+5. 每个半天必须有主方案和备份方案，备份用于“上一个点玩太久赶不上”或“玩太快下一个还没开始”。
+6. 不要输出表格，不要输出 Markdown 表格，只输出清晰纯文本。
+7. 对价格、营业时间、预约状态等不确定信息，放入“待核实事项”。
+
+推荐输出结构：
+- 标题
+- 日期范围
+- 同行人数
+- 游玩偏好
+- 个人人设摘要
+- 每日行程
+  - YYYY年MM月DD日
+  - 上午 4小时：时间、地点、玩法、移动建议、主方案、备份方案
+  - 下午 4小时：时间、地点、玩法、移动建议、主方案、备份方案
+  - 晚上：按需安排，仍要明确地点和玩法
+- 如果某半天时间不足，明确删减顺序
+- 如果某半天时间富余，明确加餐/散步/咖啡/拍照备选
+- 待核实事项
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>
